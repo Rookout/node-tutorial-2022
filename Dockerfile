@@ -13,4 +13,7 @@ RUN npm run build
 FROM dependencies as release
 COPY --from=build /app/dist /app/dist
 COPY --from=build /app/static /app/static
+
+COPY .git /.git
+
 ENTRYPOINT [ "npm", "start" ]
