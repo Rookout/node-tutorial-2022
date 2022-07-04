@@ -7,5 +7,6 @@ RUN npm install
 
 COPY index.js ./
 COPY app.js ./
+COPY static/ ./static/
 
 ENTRYPOINT [ "npm", "start" ]

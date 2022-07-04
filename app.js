@@ -9,18 +9,21 @@ const PORT = process.env.PORT || 8080
 const app = express()
 app.use(cors())
 app.use(express.json())
+app.use(express.static('static'))
+
+const router = express.Router()
 
 const db = new Map()
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.send(Array.from(db.values()))
 })
 
-app.get('/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     res.send(db.get(req.params.id))
 })
 
-app.post('/', (req, res) => {
+router.post('/', (req, res) => {
     const id = uuid();
     const task = {
         ...req.body,
@@ -32,22 +35,24 @@ app.post('/', (req, res) => {
     res.send(task)
 })
 
-app.patch('/:id', (req, res) => {
+router.patch('/:id', (req, res) => {
     const task = {...db.get(req.params.id), ...req.body}
     db.set(req.params.id, task)
     res.send(task)
 })
 
-app.delete('/', (req, res) => {
+router.delete('/', (req, res) => {
     db.clear()
     res.send(Array.from(db.values()))
 })
 
-app.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     const task = db.get(req.params.id)
     db.delete(req.params.id)
     res.send(task)
 })
+
+app.use('/todos', router)
 
 const start = () => {
     app.listen(PORT, () => { console.log(`Server is listeing on ${PORT}`) })
