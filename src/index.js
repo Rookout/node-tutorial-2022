@@ -1,3 +1,11 @@
 const server = require('./app')
+const rookout = require('rookout')
 
-server.start()
+rookout.start({ 
+    token: 'XXXXXXXXXXXXXXXX',
+    labels: {
+        env: 'dev'
+    }
+}).then(() => {
+    server.start()
+})
