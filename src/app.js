@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
         ...req.body,
         completed: false, 
         id,
-        url: req.protocol + '://' + req.get('host') + '/' + id
+        url: req.protocol + '://' + req.get('host') + '/todos/' + id
     };
     db.set(id, task)
     res.send(task)
