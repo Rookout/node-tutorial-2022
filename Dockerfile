@@ -1,4 +1,4 @@
-FROM node:16.15.1-slim as dependencies
+FROM node:16.16.0-slim as dependencies
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
